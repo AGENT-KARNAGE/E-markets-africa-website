@@ -15,11 +15,12 @@ const INTERESTS = [
   "Careers",
 ];
 
-// Get a free access key at https://web3forms.com (no card required) and
-// paste it below, or set NEXT_PUBLIC_WEB3FORMS_KEY as an environment
-// variable so it isn't hardcoded into the repo.
+// Web3Forms access keys are designed to be used client-side.
+// This fallback ensures the form works when the site is built locally
+// and uploaded to Hostinger as a static export.
 const ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+  "4ff2a36c-b675-46c6-ae52-e00e76ef7cea";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -29,14 +30,6 @@ export default function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    if (ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
-      setStatus("error");
-      setErrorMsg(
-        "Form is not yet connected. Add your Web3Forms access key to enable submissions."
-      );
-      return;
-    }
 
     setStatus("submitting");
     setErrorMsg("");
